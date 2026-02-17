@@ -16,7 +16,19 @@
  * F = anything < 60
  */
 function toLetterGrade(numGrade) {
-  // TODO
+  if (numGrade < 0 || numGrade > 100) {
+    return "INVALID";
+  } else if (numGrade >= 90) {
+    return "A";
+  } else if (numGrade >= 80) {
+    return "B";
+  } else if (numGrade >= 70) {
+    return "C";
+  } else if (numGrade >= 60) {
+    return "D";
+  } else {
+    return "F"; // grade must be > 0 and < 60, which is an F
+  }
 }
 
 /**
@@ -27,7 +39,13 @@ function toLetterGrade(numGrade) {
  * Example: [9, 3, 4, 1, 2, 0] --> [4, 2, 0]
  */
 function getEvenElements(array) {
-  // TODO
+  let newArr = [];
+  for (let i = 0; i < array.length; i++) {
+    if (array[i] % 2 == 0) {
+      newArr.push(array[i]);
+    }
+  }
+  return newArr;
 }
 
 /**
@@ -40,7 +58,14 @@ function getEvenElements(array) {
  * Example: "I love Bits of Good" --> 4
  */
 function findLongestWord(string) {
-  // TODO
+  let words = string.split(" "); // uses space as a separator to separate original string
+  let maxLength = 0;
+  for (let i = 0; i < words.length; i++) {
+    if (words[i].length > maxLength) {
+      maxLength = words[i].length;
+    }
+  }
+  return maxLength;
 }
 
 /**
@@ -65,7 +90,7 @@ function findLongestWord(string) {
     } 
  */
 function combineObjects(object1, object2) {
-  // TODO
+  return Object.assign({}, object1, object2); // if keys are the same, object2's key value overrides object1's
 }
 
 /**
@@ -77,7 +102,11 @@ function combineObjects(object1, object2) {
  *  Example: [1, 2, 3] -> [3, 2, 1]
  */
 function reverseArr(array) {
-  // TODO
+  let newArr = [];
+  for (let i = array.length - 1; i >= 0; i--) {
+    newArr.push(array[i]);
+  }
+  return newArr;
 }
 
 // DO NOT EDIT BELOW THIS LINE -- the code is for testing purposes only!
