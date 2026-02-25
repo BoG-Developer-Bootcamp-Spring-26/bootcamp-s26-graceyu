@@ -1,3 +1,5 @@
+import Pokedex from "./components/Pokedex";
+
 export default function App() {
-  return <div>Hello Pokédex</div>;
+  return <Pokedex />;
 }
