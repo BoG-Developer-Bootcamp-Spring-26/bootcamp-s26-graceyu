@@ -2,89 +2,198 @@
 
 body {
   margin: 0;
-  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  font-family: Arial, Helvetica, sans-serif;
   background: #ffffff;
-  color: #111827;
+  color: #111;
 }
 
 .page {
-  padding: 40px 16px;
-  display: grid;
-  justify-items: center;
-  gap: 20px;
+  padding: 40px 20px;
 }
 
 .title {
-  margin: 0;
-  font-size: 40px;
+  font-size: 48px;
   font-weight: 900;
+  text-align: center;
+  margin: 0 0 40px 0;
 }
 
-.topRow {
-  display: grid;
-  grid-template-columns: 64px 1fr 64px;
-  gap: 16px;
-  align-items: center;
-  width: min(700px, 100%);
-}
-
-.arrowBtn {
-  height: 54px;
-  width: 64px;
-  border-radius: 12px;
-  border: 2px solid #111;
-  background: #e5e5e5;
-  font-size: 20px;
-  cursor: pointer;
-}
-
-.arrowBtn:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-.centerBlock {
-  display: grid;
-  gap: 10px;
-  justify-items: center;
-}
-
-.idName {
-  font-size: 22px;
-  font-weight: 900;
-}
-
-.typesRow {
+.layout {
   display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
   justify-content: center;
+  gap: 120px;
+  align-items: flex-start;
 }
 
-.typePill {
-  padding: 6px 12px;
-  border-radius: 10px;
-  font-weight: 900;
-  text-transform: lowercase;
-  color: #0b1220;
+/* LEFT */
+.left {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  align-items: center;
 }
 
 .spriteBox {
   width: 320px;
   height: 320px;
   border: 3px solid #000;
+  background: #fff;
   display: grid;
   place-items: center;
-  background: #fff;
 }
 
 .sprite {
-  height: 200px;
-  width: auto;
+  width: 160px;
+  height: 160px;
+  image-rendering: pixelated;
 }
 
-.hint { color: #6b7280; font-weight: 700; }
-.error { color: #b91c1c; font-weight: 800; }
+.hint { font-weight: 700; color: #666; }
+.error { font-weight: 800; color: #b91c1c; text-align: center; padding: 0 10px; }
+
+.nameBox {
+  width: 320px;
+  background: #e5e5e5;
+  border: 1px solid #777;
+  border-radius: 10px;
+  padding: 10px 0;
+  font-size: 28px;
+  text-align: center;
+}
+
+.typesBlock {
+  width: 320px;
+  text-align: left;
+}
+
+.typesLabel {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.typesRow {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.typePill {
+  padding: 8px 16px;
+  border-radius: 10px;
+  font-size: 18px;
+  font-weight: 800;
+  text-transform: lowercase;
+  color: #0b1220;
+}
+
+.arrowRow {
+  width: 320px;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.arrowBtn {
+  width: 120px;
+  height: 50px;
+  border-radius: 10px;
+  background: #e5e5e5;
+  border: 1px solid #777;
+  font-size: 34px;
+  cursor: pointer;
+}
+
+.arrowBtn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+/* RIGHT */
+.right {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+}
+
+.rightHeader {
+  font-size: 32px;
+  font-weight: 800;
+}
+
+.dataPanel {
+  width: 420px;
+  height: 420px;
+  background: #e5e5e5;
+  padding: 22px;
+  overflow-y: auto;
+}
+
+.tabRow {
+  width: 420px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.tabBtn {
+  width: 170px;
+  height: 55px;
+  border-radius: 10px;
+  border: 1px solid #777;
+  background: #e5e5e5;
+  font-size: 26px;
+  cursor: pointer;
+}
+
+/* Active states like the Figma */
+.tabActiveInfo {
+  outline: 3px solid #facc15; /* yellow outline */
+}
+
+.tabActiveMoves {
+  background: #63ff63; /* green selected */
+}
+
+/* Moves */
+.movesList {
+  margin: 0;
+  padding-left: 22px;
+  font-size: 22px;
+  line-height: 1.35;
+}
+
+/* Info + stats */
+.infoPanel { font-size: 20px; }
+.infoRow {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(0,0,0,0.2);
+}
+.infoKey { font-weight: 800; }
+.infoVal { font-weight: 700; }
+
+.statsTitle {
+  margin-top: 18px;
+  font-weight: 900;
+  font-size: 22px;
+}
+
+.statsList {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.statRow {
+  display: flex;
+  justify-content: space-between;
+  font-size: 18px;
+}
+.statName { font-weight: 700; }
+.statVal { font-weight: 900; }
 
 /* Official type colors */
 .type-normal { background: #A8A77A; }
