@@ -8,8 +8,8 @@ export default function Pokedex() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  // Tab state persists across pokemon changes
-  const [tab, setTab] = useState("moves"); // "moves" or "info" (Figma shows Moves selected)
+  // Figma shows Moves selected; persist across pokemon changes
+  const [tab, setTab] = useState("moves"); // "moves" | "info"
 
   useEffect(() => {
     let cancelled = false;
@@ -43,7 +43,9 @@ export default function Pokedex() {
     if (!pokemon) return null;
 
     const id = pokemon.id ?? dexId;
-    const name = cap(pokemon.name ?? "");
+
+    // Figma styling: shows lowercase name
+    const nameLower = (pokemon.name ?? "").toLowerCase();
 
     const sprite =
       pokemon.sprites?.other?.["official-artwork"]?.front_default ||
@@ -61,11 +63,11 @@ export default function Pokedex() {
     const weightKg = (pokemon.weight ?? 0) / 10;
 
     const stats = (pokemon.stats ?? []).map((s) => ({
-      name: pretty(s.stat?.name ?? ""),
+      name: prettyTitle(s.stat?.name ?? ""),
       value: s.base_stat ?? 0,
     }));
 
-    return { id, name, sprite, types, moves, heightM, weightKg, stats };
+    return { id, nameLower, sprite, types, moves, heightM, weightKg, stats };
   }, [pokemon, dexId]);
 
   const prev = () => setDexId((id) => Math.max(1, id - 1));
@@ -82,11 +84,13 @@ export default function Pokedex() {
             {loading && <div className="hint">Loading...</div>}
             {error && <div className="error">{error}</div>}
             {!loading && !error && display?.sprite && (
-              <img className="sprite" src={display.sprite} alt={display.name} />
+              <img className="sprite" src={display.sprite} alt={display.nameLower} />
             )}
           </div>
 
-          <div className="nameBox">{display?.name || "—"}</div>
+          <div className="dexNumber">#{String(display?.id ?? dexId).padStart(3, "0")}</div>
+
+          <div className="nameBox">{display?.nameLower || "—"}</div>
 
           <div className="typesBlock">
             <div className="typesLabel">Types:</div>
@@ -117,7 +121,7 @@ export default function Pokedex() {
             {tab === "moves" ? (
               <ul className="movesList">
                 {(display?.moves ?? []).map((m) => (
-                  <li key={m}>{pretty(m)}</li>
+                  <li key={m}>{prettyLower(m)}</li>
                 ))}
               </ul>
             ) : (
@@ -165,11 +169,11 @@ export default function Pokedex() {
   );
 }
 
-function cap(s) {
-  return s ? s[0].toUpperCase() + s.slice(1) : "";
+function prettyLower(s) {
+  return (s ?? "").toLowerCase().replaceAll("-", " ");
 }
 
-function pretty(s) {
+function prettyTitle(s) {
   return (s ?? "")
     .replaceAll("-", " ")
     .split(" ")
