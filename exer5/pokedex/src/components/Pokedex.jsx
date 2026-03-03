@@ -1,4 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
+import TypePills from "./TypePills";
+import InfoPanel from "./InfoPanel";
+import MovesPanel from "./MovesPanel";
 
 const BASE_URL = "https://pokeapi.co/api/v2/pokemon";
 
@@ -8,8 +11,8 @@ export default function Pokedex() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  // Figma shows Moves selected; persist across pokemon changes
-  const [tab, setTab] = useState("moves"); // "moves" | "info"
+  // persists across pokemon changes
+  const [tab, setTab] = useState("moves");
 
   useEffect(() => {
     let cancelled = false;
@@ -43,8 +46,6 @@ export default function Pokedex() {
     if (!pokemon) return null;
 
     const id = pokemon.id ?? dexId;
-
-    // Figma styling: shows lowercase name
     const nameLower = (pokemon.name ?? "").toLowerCase();
 
     const sprite =
@@ -94,13 +95,7 @@ export default function Pokedex() {
 
           <div className="typesBlock">
             <div className="typesLabel">Types:</div>
-            <div className="typesRow">
-              {(display?.types ?? []).map((t) => (
-                <span key={t} className={`typePill type-${t}`}>
-                  {t}
-                </span>
-              ))}
-            </div>
+            <TypePills types={display?.types ?? []} />
           </div>
 
           <div className="arrowRow">
@@ -119,32 +114,13 @@ export default function Pokedex() {
 
           <div className="dataPanel">
             {tab === "moves" ? (
-              <ul className="movesList">
-                {(display?.moves ?? []).map((m) => (
-                  <li key={m}>{prettyLower(m)}</li>
-                ))}
-              </ul>
+              <MovesPanel moves={display?.moves ?? []} />
             ) : (
-              <div className="infoPanel">
-                <div className="infoRow">
-                  <span className="infoKey">Height</span>
-                  <span className="infoVal">{(display?.heightM ?? 0).toFixed(1)} m</span>
-                </div>
-                <div className="infoRow">
-                  <span className="infoKey">Weight</span>
-                  <span className="infoVal">{(display?.weightKg ?? 0).toFixed(1)} kg</span>
-                </div>
-
-                <div className="statsTitle">Stats</div>
-                <div className="statsList">
-                  {(display?.stats ?? []).map((s) => (
-                    <div key={s.name} className="statRow">
-                      <span className="statName">{s.name}</span>
-                      <span className="statVal">{s.value}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
+              <InfoPanel
+                heightM={display?.heightM ?? 0}
+                weightKg={display?.weightKg ?? 0}
+                stats={display?.stats ?? []}
+              />
             )}
           </div>
 
@@ -167,10 +143,6 @@ export default function Pokedex() {
       </div>
     </div>
   );
-}
-
-function prettyLower(s) {
-  return (s ?? "").toLowerCase().replaceAll("-", " ");
 }
 
 function prettyTitle(s) {
