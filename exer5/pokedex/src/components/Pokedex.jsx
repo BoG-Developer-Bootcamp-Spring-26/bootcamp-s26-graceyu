@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import TypePills from "./TypePills";
 import InfoPanel from "./InfoPanel";
 import MovesPanel from "./MovesPanel";
+import SearchBar from "./SearchBar";
 
 const BASE_URL = "https://pokeapi.co/api/v2/pokemon";
 
@@ -10,36 +11,29 @@ export default function Pokedex() {
   const [pokemon, setPokemon] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-
-  // persists across pokemon changes
   const [tab, setTab] = useState("moves");
 
-  useEffect(() => {
-    let cancelled = false;
+  async function fetchPokemon(queryOrId) {
+    setLoading(true);
+    setError("");
 
-    async function fetchPokemon() {
-      setLoading(true);
-      setError("");
+    try {
+      const res = await fetch(`${BASE_URL}/${queryOrId}/`);
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const data = await res.json();
 
-      try {
-        const res = await fetch(`${BASE_URL}/${dexId}/`);
-        if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        const data = await res.json();
-        if (!cancelled) setPokemon(data);
-      } catch (e) {
-        if (!cancelled) {
-          setPokemon(null);
-          setError("Could not load that Pokémon.");
-        }
-      } finally {
-        if (!cancelled) setLoading(false);
-      }
+      setPokemon(data);
+      setDexId(data.id);
+    } catch (e) {
+      setError("Could not load that Pokémon. Try a different name or number.");
+    } finally {
+      setLoading(false);
     }
+  }
 
-    fetchPokemon();
-    return () => {
-      cancelled = true;
-    };
+  useEffect(() => {
+    fetchPokemon(dexId);
+    // eslint-disable-next-line
   }, [dexId]);
 
   const display = useMemo(() => {
@@ -74,9 +68,16 @@ export default function Pokedex() {
   const prev = () => setDexId((id) => Math.max(1, id - 1));
   const next = () => setDexId((id) => id + 1);
 
+  const onSearch = (q) => {
+    const normalized = q.toLowerCase();
+    fetchPokemon(normalized);
+  };
+
   return (
     <div className="page">
       <h1 className="title">Exercise 5 - PokeDex!</h1>
+
+      <SearchBar onSearch={onSearch} disabled={loading} />
 
       <div className="layout">
         {/* LEFT PANEL */}
@@ -89,7 +90,9 @@ export default function Pokedex() {
             )}
           </div>
 
-          <div className="dexNumber">#{String(display?.id ?? dexId).padStart(3, "0")}</div>
+          <div className="dexNumber">
+            #{String(display?.id ?? dexId).padStart(3, "0")}
+          </div>
 
           <div className="nameBox">{display?.nameLower || "—"}</div>
 
