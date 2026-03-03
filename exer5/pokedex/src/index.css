@@ -1,13 +1,107 @@
+* { box-sizing: border-box; }
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  background: #ffffff;
+  color: #111827;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.page {
+  padding: 40px 16px;
+  display: grid;
+  justify-items: center;
+  gap: 20px;
 }
+
+.title {
+  margin: 0;
+  font-size: 40px;
+  font-weight: 900;
+}
+
+.topRow {
+  display: grid;
+  grid-template-columns: 64px 1fr 64px;
+  gap: 16px;
+  align-items: center;
+  width: min(700px, 100%);
+}
+
+.arrowBtn {
+  height: 54px;
+  width: 64px;
+  border-radius: 12px;
+  border: 2px solid #111;
+  background: #e5e5e5;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.arrowBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.centerBlock {
+  display: grid;
+  gap: 10px;
+  justify-items: center;
+}
+
+.idName {
+  font-size: 22px;
+  font-weight: 900;
+}
+
+.typesRow {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.typePill {
+  padding: 6px 12px;
+  border-radius: 10px;
+  font-weight: 900;
+  text-transform: lowercase;
+  color: #0b1220;
+}
+
+.spriteBox {
+  width: 320px;
+  height: 320px;
+  border: 3px solid #000;
+  display: grid;
+  place-items: center;
+  background: #fff;
+}
+
+.sprite {
+  height: 200px;
+  width: auto;
+}
+
+.hint { color: #6b7280; font-weight: 700; }
+.error { color: #b91c1c; font-weight: 800; }
+
+/* Official type colors */
+.type-normal { background: #A8A77A; }
+.type-fire { background: #EE8130; }
+.type-water { background: #6390F0; }
+.type-electric { background: #F7D02C; }
+.type-grass { background: #7AC74C; }
+.type-ice { background: #96D9D6; }
+.type-fighting { background: #C22E28; color: white; }
+.type-poison { background: #A33EA1; color: white; }
+.type-ground { background: #E2BF65; }
+.type-flying { background: #A98FF3; }
+.type-psychic { background: #F95587; }
+.type-bug { background: #A6B91A; }
+.type-rock { background: #B6A136; }
+.type-ghost { background: #735797; color: white; }
+.type-dragon { background: #6F35FC; color: white; }
+.type-dark { background: #705746; color: white; }
+.type-steel { background: #B7B7CE; }
+.type-fairy { background: #D685AD; }
