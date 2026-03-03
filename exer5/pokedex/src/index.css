@@ -209,7 +209,7 @@ body {
 }
 
 .tabActiveInfo {
-  outline: 3px solid #facc15;
+  background: #63ff63;
 }
 
 .tabActiveMoves {
