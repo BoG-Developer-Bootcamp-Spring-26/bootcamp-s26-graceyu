@@ -18,6 +18,7 @@ In this project, you'll be creating a frontend that graphically displays Pokémo
 # Submission Instructions
 
 - Create a 0.5-3 minute video walkthrough of your project (include the video link in the README of your project repo)
+- Demo link: https://go.screenpal.com/watch/cOee32nZXnQ
 - Push all your changes to the remote repository.
 
 ## Requirements
