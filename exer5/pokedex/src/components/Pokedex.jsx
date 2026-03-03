@@ -12,33 +12,56 @@ export default function Pokedex() {
       const data = await res.json();
       setPokemon(data);
     }
-
     fetchPokemon();
   }, [dexId]);
 
-  const name = pokemon?.name ?? "";
+  const displayId = pokemon?.id ?? dexId;
+  const name = pokemon?.name ? cap(pokemon.name) : "";
   const sprite =
     pokemon?.sprites?.other?.["official-artwork"]?.front_default ||
     pokemon?.sprites?.front_default ||
     "";
 
+  const types = (pokemon?.types ?? [])
+    .slice()
+    .sort((a, b) => a.slot - b.slot)
+    .map((t) => t.type.name);
+
   return (
     <div>
       <h1>Pokédex</h1>
 
-      <div style={{ display: "flex", gap: "20px", alignItems: "center" }}>
+      <div style={{ display: "flex", gap: 20, alignItems: "center" }}>
         <button onClick={() => setDexId((id) => Math.max(1, id - 1))}>◀</button>
 
-        <div style={{ fontSize: "24px", fontWeight: "bold" }}>
-          #{dexId} {name && `- ${cap(name)}`}
+        <div>
+          <div style={{ fontSize: 22, fontWeight: 800 }}>
+            #{String(displayId).padStart(3, "0")} {name}
+          </div>
+
+          <div style={{ marginTop: 8, display: "flex", gap: 8, flexWrap: "wrap" }}>
+            {types.map((t) => (
+              <span
+                key={t}
+                style={{
+                  padding: "6px 10px",
+                  borderRadius: 10,
+                  background: "#ddd",
+                  fontWeight: 700,
+                }}
+              >
+                {t}
+              </span>
+            ))}
+          </div>
         </div>
 
         <button onClick={() => setDexId((id) => id + 1)}>▶</button>
       </div>
 
-      <div style={{ marginTop: "20px" }}>
+      <div style={{ marginTop: 20 }}>
         {sprite ? (
-          <img src={sprite} alt={name} style={{ height: "200px" }} />
+          <img src={sprite} alt={name} style={{ height: 200 }} />
         ) : (
           <div>Loading...</div>
         )}
@@ -48,6 +71,5 @@ export default function Pokedex() {
 }
 
 function cap(s) {
-  if (!s) return "";
-  return s[0].toUpperCase() + s.slice(1);
+  return s ? s[0].toUpperCase() + s.slice(1) : "";
 }
